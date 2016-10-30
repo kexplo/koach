@@ -54,9 +54,14 @@ def display(text, corrects):
             break
 
 
+@click.command()
+@click.argument('input', type=click.File('r', encoding='utf-8'))
+def cli(input):
+    data = input.read()
+    if not data:
+        return
+    display(data, query(data))
+
+
 if __name__ == '__main__':
-    test_data = '한국어 맞춤법/문법 검사기 는 부산대학교 인공지 능연구실과 ' \
-        '(주)나라 인포테크가 함께 만들고 있습니다.\n' \
-        '이 검사 기는 개인이나 학 생만 무 료로  사용할 수 있습니다.'
-    corrects = query(test_data)
-    display(test_data, corrects)
+    cli()
