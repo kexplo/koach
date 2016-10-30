@@ -2,25 +2,9 @@
 
 from __future__ import absolute_import
 
-from colorama import Fore
+import click
 
 from query import query
-
-
-def wrap_fore_color(text, clr):
-    return clr + text + Fore.RESET
-
-
-def fore_red(text):
-    return wrap_fore_color(text, Fore.RED)
-
-
-def fore_green(text):
-    return wrap_fore_color(text, Fore.GREEN)
-
-
-def fore_cyan(text):
-    return wrap_fore_color(text, Fore.CYAN)
 
 
 def apply_color(text, corrects):
@@ -30,7 +14,7 @@ def apply_color(text, corrects):
         if find_index == -1:
             continue
         len_word = len(correct['word'])
-        colored_word = fore_red(correct['word'])
+        colored_word = click.style(correct['word'], fg='red')
         text = text[:find_index] + colored_word + text[find_index+len_word:]
         next_index = find_index + len(colored_word)
     return text
@@ -38,7 +22,7 @@ def apply_color(text, corrects):
 
 def display(text, corrects):
     if not corrects:
-        print 'no error was found'
+        click.echo(u'no error was found')
 
     def next_line(text):
         line_number = 1
@@ -56,15 +40,17 @@ def display(text, corrects):
                 next_index = 0
                 continue
             next_index = index + len(correct['word'])
-            line_col_text = fore_cyan('line {0} col {1}:'.format(line_number,
-                                                                 index))
-            print '{0} {1}'.format(line_col_text,
-                                   apply_color(line, [correct]))
-            colored_wrong_word = fore_red(correct['word'])
+            line_col_text = click.style('line {0} col {1}:'
+                                        ''.format(line_number, index),
+                                        fg='cyan')
+            click.echo(u'{0} {1}'.format(line_col_text,
+                                         apply_color(line, [correct])))
+            colored_wrong_word = click.style(correct['word'], fg='red')
             colored_fixed_word = ', '.join(
-                fore_green(w) for w in correct['replaces'])
-            print '{0} -> {1}'.format(colored_wrong_word, colored_fixed_word)
-            print correct['help'] + '\n'
+                click.style(w, fg='green') for w in correct['replaces'])
+            click.echo(u'{0} -> {1}'.format(colored_wrong_word,
+                                            colored_fixed_word))
+            click.echo(correct['help'] + '\n')
             break
 
 
