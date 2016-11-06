@@ -57,6 +57,8 @@ def display(text, corrects):
 @click.command()
 @click.argument('input', type=click.File('r', encoding='utf-8'))
 def cli(input):
+    """부산대 한국어 문법 검사기( http://speller.cs.pusan.ac.kr/ )에 의존하는
+    한국어 문법 검사기"""
     data = input.read()
     if not data:
         return
