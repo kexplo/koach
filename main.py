@@ -2,9 +2,45 @@
 
 from __future__ import absolute_import
 
+import bisect
+import re
+import sys
+
 import click
 
 from query import query
+
+
+def find_all(substr, string):
+    return [i.start() for i in re.finditer(substr, string)]
+
+
+def calc_line_col(index, line_info):
+    line = bisect.bisect_left(line_info, index) + 1
+    if line == 1:
+        line_start_index = 0
+    else:
+        line_start_index = line_info[line - 2]
+    col = index - line_start_index
+    return line, col
+
+
+def calc_line_col_from_string(substr, string, start=0, line_info=None):
+    if line_info is None:
+        line_info = find_all('\n', string)
+    index = string.find(substr, start)
+    return calc_line_col(index, line_info)
+
+
+def get_line_substring(string, line, line_info=None):
+    if line_info is None:
+        line_info = find_all('\n', string)
+    start_index = line_info[line - 1] + 1
+    try:
+        end_index = line_info[line]
+    except IndexError:
+        return string[start_index:]
+    return string[start_index:end_index]
 
 
 def apply_color(text, corrects):
@@ -24,34 +60,26 @@ def display(text, corrects):
     if not corrects:
         click.echo(u'no error was found')
 
-    def next_line(text):
-        line_number = 1
-        for line in text.split('\n'):
-            yield (line, line_number)
-            line_number += 1
-    line_gen = next_line(text)
-    line, line_number = next(line_gen)
+    line_info = find_all('\n', text)
     next_index = 0
     for correct in corrects:
-        while True:
-            index = line.find(correct['word'], next_index)
-            if index == -1:
-                line, line_number = next(line_gen)
-                next_index = 0
-                continue
-            next_index = index + len(correct['word'])
-            line_col_text = click.style('line {0} col {1}:'
-                                        ''.format(line_number, index),
-                                        fg='cyan')
-            click.echo(u'{0} {1}'.format(line_col_text,
-                                         apply_color(line, [correct])))
-            colored_wrong_word = click.style(correct['word'], fg='red')
-            colored_fixed_word = ', '.join(
-                click.style(w, fg='green') for w in correct['replaces'])
-            click.echo(u'{0} -> {1}'.format(colored_wrong_word,
-                                            colored_fixed_word))
-            click.echo(correct['help'] + '\n')
-            break
+        index = text.find(correct['word'], next_index)
+        if index == -1:
+            click.echo(u'can not found {0}', file=sys.stderr)
+            continue
+        next_index = index + len(correct['word'])
+        line, col = calc_line_col(index, line_info)
+        line_col_text = click.style('line {0} col {1}:'.format(line, col),
+                                    fg='cyan')
+        substr_line = get_line_substring(text, line)
+        click.echo(u'{0} {1}'.format(line_col_text,
+                                     apply_color(substr_line, [correct])))
+        colored_wrong_word = click.style(correct['word'], fg='red')
+        colored_fixed_word = ', '.join(
+            click.style(w, fg='green') for w in correct['replaces'])
+        click.echo(u'{0} -> {1}'.format(colored_wrong_word,
+                                        colored_fixed_word))
+        click.echo(correct['help'] + '\n')
 
 
 @click.command()
