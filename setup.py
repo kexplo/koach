@@ -9,13 +9,16 @@ def requirements(filename):
         return [x.strip() for x in f.readlines() if x.strip()]
 
 
-setup(name='ko-grammer-checker',
+setup(name='kogc',
       version='1.0',
       description='korean grammer checker',
       author='Chanwoong Kim',
       author_email='me@chanwoong.kim',
       url='',
       packages=find_packages(),
+      entry_points={
+          'console_scripts': ['kogc = ko_grammer_checker.__main__:cli']
+      },
       classifiers=[
           'Development Status :: 4 - Beta',
           'Environment :: Console',
