@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup
 import requests
 
 
+__all__ = ['query']
+
+
 URL = 'http://speller.cs.pusan.ac.kr/PnuSpellerISAPI_201602/lib/check.asp'
 NEXT_URL = 'http://speller.cs.pusan.ac.kr/PnuSpellerISAPI_201602/lib/' \
     'checkNext.asp'

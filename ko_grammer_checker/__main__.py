@@ -8,7 +8,10 @@ import sys
 
 import click
 
-from query import query
+from .query import query
+
+
+__all__ = ['cli']
 
 
 def find_all(substr, string):
