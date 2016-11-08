@@ -12,7 +12,7 @@ def requirements(filename):
 setup(name='ko-grammer-checker',
       version='1.0',
       description='korean grammer checker',
-      auther='Chanwoong Kim',
+      author='Chanwoong Kim',
       author_email='me@chanwoong.kim',
       url='',
       packages=find_packages(),
