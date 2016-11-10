@@ -38,6 +38,8 @@ def calc_line_col_from_string(substr, string, start=0, line_info=None):
 def get_line_substring(string, line, line_info=None):
     if line_info is None:
         line_info = find_all('\n', string)
+    if not line_info:
+        return string
     start_index = line_info[line - 1] + 1
     try:
         end_index = line_info[line]
