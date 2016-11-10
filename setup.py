@@ -9,7 +9,7 @@ def requirements(filename):
         return [x.strip() for x in f.readlines() if x.strip()]
 
 
-setup(name='korg',
+setup(name='koach',
       version='1.0',
       description='korean grammer checker',
       author='Chanwoong Kim',
@@ -17,7 +17,7 @@ setup(name='korg',
       url='',
       packages=find_packages(),
       entry_points={
-          'console_scripts': ['korg = ko_grammer_checker.__main__:cli']
+          'console_scripts': ['koach = koach.__main__:cli']
       },
       classifiers=[
           'Development Status :: 4 - Beta',
