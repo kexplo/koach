@@ -15,10 +15,20 @@ __all__ = ['cli']
 
 
 def find_all(substr, string):
+    """
+    >>> find_all('b', 'aaaabbccddeeefffbdde')
+    [4, 5, 16]
+    """
     return [i.start() for i in re.finditer(substr, string)]
 
 
 def calc_line_col(index, line_info):
+    """
+    >>> calc_line_col(10, [10, 26])
+    (1, 10)
+    >>> calc_line_col(11, [10, 26])
+    (2, 1)
+    """
     line = bisect.bisect_left(line_info, index) + 1
     if line == 1:
         line_start_index = 0
@@ -29,6 +39,16 @@ def calc_line_col(index, line_info):
 
 
 def calc_line_col_from_string(substr, string, start=0, line_info=None):
+    u"""
+    >>> calc_line_col_from_string('hello', 'first line\\nabchello, world\\nz')
+    (2, 4)
+    >>> calc_line_col_from_string(u'집회', \
+                                  u'대한민국헌법 제2장 국민의 권리와 의무\\n' \
+                                  u'제21조\\n' \
+                                  u'제1항 모든 국민은 언론·출판의 자유와 ' \
+                                  u'집회·결사의 자유를 가진다.')
+    (3, 23)
+    """
     if line_info is None:
         line_info = find_all('\n', string)
     index = string.find(substr, start)
@@ -36,6 +56,15 @@ def calc_line_col_from_string(substr, string, start=0, line_info=None):
 
 
 def get_line_substring(string, line, line_info=None):
+    u"""
+    line: 1-based index.
+    >>> print get_line_substring(u'대한민국헌법 제1장 총강\\n제1조\\n' \
+                                 u'제1항 대한민국은 민주공화국이다.\\n' \
+                                 u'제2항 대한민국의 주권은 국민에게 있고, ' \
+                                 u'모든 권력은 국민으로부터 나온다.', 3)
+    제1항 대한민국은 민주공화국이다.
+
+    """
     if line_info is None:
         line_info = find_all('\n', string)
     if not line_info:
