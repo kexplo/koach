@@ -40,9 +40,12 @@ def get_line_substring(string, line, line_info=None):
         line_info = find_all('\n', string)
     if not line_info:
         return string
-    start_index = line_info[line - 1] + 1
+    if line == 1:
+        start_index = 0
+    else:
+        start_index = line_info[line - 2] + 1
     try:
-        end_index = line_info[line]
+        end_index = line_info[line - 1]
     except IndexError:
         return string[start_index:]
     return string[start_index:end_index]
@@ -76,7 +79,7 @@ def display(text, corrects):
         line, col = calc_line_col(index, line_info)
         line_col_text = click.style('line {0} col {1}:'.format(line, col),
                                     fg='cyan')
-        substr_line = get_line_substring(text, line)
+        substr_line = get_line_substring(text, line, line_info)
         click.echo(u'{0} {1}'.format(line_col_text,
                                      apply_color(substr_line, [correct])))
         colored_wrong_word = click.style(correct['word'], fg='red')
