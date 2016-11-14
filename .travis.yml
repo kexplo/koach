@@ -8,4 +8,6 @@ python:
 install:
   - pip install --user -e .
   - pip install --user -r tests/requirements.txt
-script: py.test -v
+script: py.test -v --cov=koach --cov-report=term-missing
+after_success:
+  - coveralls
