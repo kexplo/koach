@@ -11,7 +11,7 @@ def requirements(filename):
 
 setup(name='koach',
       version='1.0',
-      description='korean grammer checker',
+      description='korean spell checker',
       author='Chanwoong Kim',
       author_email='me@chanwoong.kim',
       url='https://github.com/kexplo/koach',
