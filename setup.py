@@ -29,5 +29,5 @@ setup(name='koach',
           'Topic :: Utilities',
       ],
       install_requires=requirements('requirements.txt'),
-      # test_require=requirements('test/requirements.txt'),
+      tests_require=requirements('tests/requirements.txt'),
       )
