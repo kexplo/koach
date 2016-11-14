@@ -19,7 +19,7 @@ $ pip install koach
 
 # TODO
 
-* [ ] pytest
-* [ ] Travis-CI
+* [x] pytest
+* [x] Travis-CI
 * [ ] Interactive mode
 * [ ] Daum grammer API
