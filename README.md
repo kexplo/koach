@@ -22,4 +22,5 @@ $ pip install koach
 * [x] pytest
 * [x] Travis-CI
 * [ ] Interactive mode
+* [ ] Ignore word list
 * [ ] Daum grammer API
