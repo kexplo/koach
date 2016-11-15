@@ -10,7 +10,7 @@ def requirements(filename):
 
 
 setup(name='koach',
-      version='1.0',
+      version='1.1.0',
       description='korean spell checker',
       author='Chanwoong Kim',
       author_email='me@chanwoong.kim',
