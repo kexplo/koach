@@ -14,7 +14,7 @@ $ pip install koach
 
 # Demo
 
-[![asciicast](https://asciinema.org/a/92646.png)](https://asciinema.org/a/92646)
+[![asciicast](https://asciinema.org/a/92839.png)](https://asciinema.org/a/92839)
 
 
 # TODO
