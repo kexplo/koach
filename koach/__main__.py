@@ -66,6 +66,12 @@ def get_line_substring(string, line, line_info=None):
                                  u'제2항 대한민국의 주권은 국민에게 있고, ' \
                                  u'모든 권력은 국민으로부터 나온다.', 3)
     제1항 대한민국은 민주공화국이다.
+    >>> print get_line_substring(u'안녕하세요.\\n반갑습니다', 1)
+    안녕하세요.
+    >>> print get_line_substring(u'호옹이', 1, [])
+    호옹이
+    >>> print get_line_substring(u'호옹이\\nbbb\\nccc', 3)
+    ccc
 
     """
     if line_info is None:
