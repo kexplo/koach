@@ -24,3 +24,4 @@ $ pip install koach
 * [ ] Interactive mode
 * [ ] Ignore word list
 * [ ] Daum grammer API
+* [ ] hunspell-ko
