@@ -120,11 +120,12 @@ def display(text, corrects):
 
 
 @click.command()
-@click.argument('input', type=click.File('r', encoding='utf-8'))
-def cli(input):
+@click.argument('file', type=click.File('r', encoding='utf-8'), default='-')
+def cli(file):
     """부산대 한국어 문법 검사기( http://speller.cs.pusan.ac.kr/ )에 의존하는
-    CLI 한국어 문법 검사기"""
-    data = input.read()
+    CLI 한국어 문법 검사기.
+    FILE을 읽어서 부산대 한국어 문법 검사기의 결과를 표시합니다."""
+    data = file.read()
     if not data:
         return
     display(data, query(data))
