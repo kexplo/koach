@@ -25,21 +25,24 @@ def find_all(substr, string):
 def calc_line_col(index, line_info):
     """
     >>> calc_line_col(10, [10, 26])
-    (1, 10)
+    (1, 11)
     >>> calc_line_col(11, [10, 26])
     (2, 1)
     """
     line = bisect.bisect_left(line_info, index) + 1
     if line == 1:
-        line_start_index = 0
-    else:
-        line_start_index = line_info[line - 2]
+        return 1, index + 1
+    line_start_index = line_info[line - 2]
     col = index - line_start_index
     return line, col
 
 
 def calc_line_col_from_string(substr, string, start=0, line_info=None):
     u"""
+    >>> calc_line_col_from_string('0', '1234567890\\nabcdefghijklmno\\np')
+    (1, 10)
+    >>> calc_line_col_from_string('a', '1234567890\\nabcdefghijklmno\\np')
+    (2, 1)
     >>> calc_line_col_from_string('hello', 'first line\\nabchello, world\\nz')
     (2, 4)
     >>> calc_line_col_from_string(u'집회', \
