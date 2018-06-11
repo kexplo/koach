@@ -7,7 +7,7 @@ import pytest
 
 @pytest.mark.parametrize('query_string,expected', [
     (u'검사기 넘나 좋은 것', [{
-        'help': u"'너무나'가 바르지 않은지요?",
+        'help': u"'너무나'는 '넘나'로 줄여 쓸 수 없습니다.",
         'replaces': [u'너무나 좋은'],
         'word': u'넘나 좋은'
     }]),
