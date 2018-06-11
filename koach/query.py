@@ -9,9 +9,8 @@ import requests
 __all__ = ['query']
 
 
-URL = 'http://speller.cs.pusan.ac.kr/PnuSpellerISAPI_201602/lib/check.asp'
-NEXT_URL = 'http://speller.cs.pusan.ac.kr/PnuSpellerISAPI_201602/lib/' \
-    'checkNext.asp'
+URL = 'http://speller.cs.pusan.ac.kr/PnuWebSpeller/lib/check.asp'
+NEXT_URL = 'http://speller.cs.pusan.ac.kr/PnuWebSpeller/lib/checkNext.asp'
 
 
 def select_first(soup, selector):
